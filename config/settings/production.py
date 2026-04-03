@@ -19,3 +19,11 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    'CORS_ALLOWED_ORIGINS',
+    'https://checkin.dsti-ums.id'
+).split(',') + [
+    'https://172.16.64.194:4200',
+    'https://172.16.64.194:4443',
+]

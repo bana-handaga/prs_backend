@@ -29,8 +29,14 @@ class HolidaySerializer(serializers.ModelSerializer):
 class AttendanceRecordSerializer(serializers.ModelSerializer):
     staff_name = serializers.CharField(source='staff.full_name', read_only=True)
     staff_employee_id = serializers.CharField(source='staff.employee_id', read_only=True)
-    department_name = serializers.CharField(source='staff.department.name', read_only=True)
-    schedule_name = serializers.CharField(source='schedule.name', read_only=True)
+    department_name = serializers.SerializerMethodField()
+    schedule_name = serializers.SerializerMethodField()
+
+    def get_department_name(self, obj):
+        return obj.staff.department.name if obj.staff.department else None
+
+    def get_schedule_name(self, obj):
+        return obj.schedule.name if obj.schedule else None
     status_display = serializers.CharField(source='get_status_display', read_only=True)
     work_duration_hours = serializers.CharField(read_only=True)
 
